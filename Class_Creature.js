@@ -55,10 +55,18 @@ class Creature {
   }
   
   visualize(r1,r2,r3){
-    circle(this.pos.x,this.pos.y,r1);
-    circle(this.pos.x,this.pos.y,r2);
-    circle(this.pos.x,this.pos.y,r3);
 
+    push();
+
+    //circle(this.pos.x,this.pos.y,r2);
+    //circle(this.pos.x,this.pos.y,r3);
+    translate(this.pos.x,this.pos.y);
+    rotate(this.vel.heading());
+    scale(0.2);
+    triangle(50,-50,50,50,100,0);
+    circle(0,0,r1);
+
+    pop();
   }
   checkBorders(borderX0,borderY0,borderX1,borderY1){
     if ((this.pos.x > borderX1)||(this.pos.x < borderX0)) {

@@ -18,6 +18,7 @@ function setup() {
 
   dna1 = new Dna(15);
   Objectives = [];
+  Creatures = []; 
   dna1.generateGenes();
 
   objective_1 = new Objective(0);
@@ -27,6 +28,7 @@ function setup() {
   objective_1.setPosition(200,200);
 
    creature_1 = new Creature(windowWidth/2,windowHeight/2);
+   Creatures.push(creature_1);
  } 
 
 // ------------------------------------------------------------------
@@ -46,9 +48,20 @@ function draw() {
   objective_2.visualize();
   objective_2.setIsTarget(1);
 
-  creature_1.update(0.5,2,0,Objectives);
+
+  for(let i = 0; i<Creatures.length;i++){
+  	Creatures[i].update(random(0.35,0.5),random(1.5,2),0,Objectives);
+	}
   dna1.visualize();
   text(ml5.version, width/2, height/2);
 }
+
+function mouseClicked() {
+	let newCreature = new Creature(mouseX,mouseY);
+	Creatures.push(newCreature);
+
+
+}
+
 
 
