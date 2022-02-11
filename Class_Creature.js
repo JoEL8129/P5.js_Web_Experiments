@@ -1,3 +1,5 @@
+
+
 class Creature {
   constructor(_xPosInit,_yPosInit){
     this.pos = createVector(_xPosInit,_yPosInit);
@@ -5,9 +7,8 @@ class Creature {
     this.acc = createVector(0,0);
     this.target = createVector(0,0);
     this.dir = createVector(0,0);
-    this.gravity = createVector(0,1);
-    
-    
+    this.gravity = createVector(0,1);  
+
   }
 
 // Birth
@@ -16,22 +17,29 @@ class Creature {
   }
   
 // Life
-  update(_TargetVector,_TurningRate,_maxSpeed,_dirOffset){
+  update(_TurningRate,_maxSpeed,_dirOffset,_AllObjectives){
     this.visualize(60,50,35);
-    this.updateDirection(_TargetVector,_dirOffset);
+    this.computeTarget(_AllObjectives);
+    this.updateDirection(this.target,_dirOffset);
     this.applyForce(this.dir);
     this.move(_maxSpeed,_TurningRate);
     this.checkBorders(0,0,windowWidth,windowHeight);
   }
-  updateDirection(_targetVector,_dirOffset){
-    this.dir = _targetVector.sub(this.pos);
+  updateDirection(_LookAtVector,_dirOffset){
+    this.dir = _LookAtVector.sub(this.pos);
     this.dir.add(_dirOffset);
     this.dir.normalize();
   }
   
-  // getter 
-  getDistance(_Target){
-   return this.pos.dist(_Target);
+
+  computeTarget(_ObjectivesList){
+    for( let i = 0; i< _ObjectivesList.length; i++){
+      let isObjectiveTarget = _ObjectivesList[i].getIsTarget(); 
+        if (isObjectiveTarget) {
+          this.target = _ObjectivesList[i].getPosition();
+        }
+      }
+  
   }
   
   applyForce(_forceVector){
