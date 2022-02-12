@@ -14,7 +14,7 @@ let p;
 
 
 
-const num = 500;
+const num = 1000;
 const noiseScale = 0.01;
 
 
@@ -57,15 +57,19 @@ function windowResized() {
 // ------------------------------------------------------------------
 // Main render loop 
 function draw() {
-  
-	background(0,10);
+  	//background(0);
+
+	background(255,20);
 
 
-	stroke(255);
+	
 	for(let i = 0; i<num;i++){
 		let c = Particles[i];
+		stroke(0,0,255);
+		
 		point(c.x,c.y);
 		let n = noise(c.x*noiseScale,c.y*noiseScale);
+		noiseDetail(2.5);
 		let a = TAU * n;
 		c.x += cos(a);
 		c.y += sin (a);
@@ -76,7 +80,7 @@ function draw() {
 
 	}
 
-  	
+  	stroke(0);
   	objective_1.visualize();
 
 
@@ -95,6 +99,7 @@ function draw() {
 
 function mouseClicked() {
 	Creatures.push(new Creature(mouseX,mouseY));
+	noiseSeed(random(5000));
 }
 
 function onScreen(v){
