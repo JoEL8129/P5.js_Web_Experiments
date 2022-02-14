@@ -1,3 +1,5 @@
+//JObject is the base class for an Object that can be placed or spawned in a level.
+
 class JObject {
   constructor(){
   	this.pos = createVector(0,0);

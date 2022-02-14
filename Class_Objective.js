@@ -1,3 +1,5 @@
+//Inherits from "JObject.js"
+
 class Objective extends JObject{
   constructor(){
    super()   
