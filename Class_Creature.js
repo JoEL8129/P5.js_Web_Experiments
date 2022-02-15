@@ -1,19 +1,29 @@
+//Inherits from "JObject.js"
 
-
-class Creature {
-  constructor(_xPosInit,_yPosInit){
-    this.pos = createVector(_xPosInit,_yPosInit);
+class Creature extends JObject {
+  constructor(){
+    super()
+    //vectors
     this.vel = createVector(0,0);
     this.acc = createVector(0,0);
     this.target = createVector(0,0);
     this.dir = createVector(0,0);
-
+    //floats
     this.maxSpeed = 0.5;
     this.maxForce = 0.2;
+    this.scale = 1;
+    this.radius = 0.2;
 
   }
 
+//Birth
+
+  setup(_xPosInit,_yPosInit){
+    this.setPosition(createVector(_xPosInit,_yPosInit));
+  }
+
 // Life
+
   update(_AllObjectives){
     
     this.computeTarget(_AllObjectives);
@@ -23,9 +33,14 @@ class Creature {
     this.checkBorders(0,0,windowWidth,windowHeight);
     this.visualize(60,50,35);
   }
+
+
+  //Functions
+
+
   updateDirection(){
     this.dir = this.target.sub(this.pos);
-  //  this.dir.normalize(); 
+    this.dir.normalize(); 
   }
   
   computeTarget(_ObjectivesList){
@@ -54,7 +69,7 @@ class Creature {
     this.pos.add(this.vel);
   }
   
-  visualize(r1,r2,r3){
+  visualize(){
 
     push();
 
@@ -62,9 +77,9 @@ class Creature {
     //circle(this.pos.x,this.pos.y,r3);
     translate(this.pos.x,this.pos.y);
     rotate(this.vel.heading());
-    scale(0.2);
+    scale(this.scale);
     triangle(50,-50,50,50,100,0);
-    circle(0,0,r1);
+    circle(0,0,this.radius);
 
     pop();
   }

@@ -1,6 +1,6 @@
 //Inherits from "JObject.js"
 
-class Objective extends JObject{
+class Objective extends JObject {
   constructor(){
    super()   
     this.isTarget= 0;
