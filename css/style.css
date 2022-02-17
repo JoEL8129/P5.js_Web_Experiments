@@ -1,0 +1,117 @@
+html, body {
+   
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.15);
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+ nav{
+/*    height: 60px;
+    background-color: #ffffff90;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    height: auto;*/
+
+    margin: 0 auto;
+    background-color: rgba(255,255,255,0.2);
+    box-shadow: 0px 0px 5px #00000060, 
+                inset 0px 0px 5px #fff;
+    height: 64px;
+    width: 100%;
+    position: fixed;
+    display: flex;
+
+ }
+
+nav ul{
+    padding:0;
+    margin:0;
+    float: right;
+    margin-right: 30px; 
+
+}
+
+
+nav ul li{
+    background: rgba(200,201,198,0.1);
+    position: relative;
+    list-style: none;
+    display: inline-block;
+
+}
+
+nav ul li a{
+    display: block;
+    padding: 0 15px;
+    color: rgba(0,0,0,0.5);
+    text-decoration: none;
+    line-height: 60px;
+    font-size: 20px;
+}
+
+nav ul li a:hover{
+    background: rgba(0,50,0,0.2);
+}
+
+nav ul ul{
+    position: absolute;
+    top:60px;
+    display: none;
+
+}
+
+nav ul li:hover > ul{
+    display: block;
+}
+
+nav ul ul li{
+    width: 150px;
+    float: none;
+    display: list-item;
+    position: relative;
+
+}
+
+nav ul ul ul li{
+    width: 350px;
+    position: relative;
+    top: -60px;
+    left: 150px;
+
+}
+#dropDownMenu {
+    margin: 0 auto;
+    background-color: #ffffff90;
+    
+    height: 64px;
+    width: 100%;
+    position: fixed;
+    display: flex;
+}
+
+a {
+    
+    text-shadow: 
+
+
+                 0 0 5px rgba(120,117,128,0.8);
+}
+
+.container {
+    margin: auto;
+    max-width: 900px;
+}
+
+#footer {
+    background-color: #ffffff90;
+    box-shadow: 0px 0px 5px #00000060, 
+                inset 0px 0px 5px #fff;
+    margin-top: 0px;
+    padding: 20px 0 25px 0;
+
+    height: 10px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+}
