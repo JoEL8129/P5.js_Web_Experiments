@@ -14,6 +14,8 @@ class Creature extends JObject {
     this.scale = 1;
     this.radius = 0.2;
 
+   
+
   }
 
 //Birth
@@ -50,6 +52,7 @@ class Creature extends JObject {
         }
       }
   }
+
 //  seek(_target){
 //    _target.sub(this.pos);
 //    _target.setMag(0.5);
@@ -78,11 +81,35 @@ class Creature extends JObject {
     translate(this.pos.x,this.pos.y);
     rotate(this.vel.heading());
     scale(this.scale);
-    triangle(50,-50,50,50,100,0);
+    triangle(-15,-15,-15,15,0,0);
     circle(0,0,this.radius);
 
     pop();
   }
+
+
+
+  connectCreatures(_creatures) {
+_creatures.forEach(element =>{
+ 
+
+      let dis = dist(this.pos.x,this.pos.y,element.x,element.y);
+      if(dis<35) {
+        push();
+angleMode(DEGREES);
+
+        stroke('rgba(255,255,255,0.4)');
+        strokeWeight(1);
+        line(this.pos.x,this.pos.y,element.x,element.y);
+        for(let i = 0; i<5;i++){
+          arc(element.x,element.y,5+5*i,5+5*i,random(180),random(180,360));
+        }
+        pop();
+      }
+    });
+
+  	}
+
   checkBorders(borderX0,borderY0,borderX1,borderY1){
     if ((this.pos.x > borderX1)||(this.pos.x < borderX0)) {
       this.vel.x = this.vel.x * -1;

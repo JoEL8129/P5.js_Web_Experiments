@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------
-// Variables
+// Object Variables
 let creature_1;
 let dna1;
 
@@ -8,100 +8,188 @@ let objective_2;
 
 let Objectives = [];
 let Creatures = [];
-let Particles = [];
+
 
 let p;
 
-const num = 150;
-const noiseScale = 0.01;
+let num = 200;
+let noiseScale = 0.02;
 
 // UI
 var button_1;
-
 var rect;
+
 // Logic
 let CreatureCreationPossible = 0;
 
+//
+let word = []; 
+let letters = [];
 
 
+let Particles = [];
 
+let eas;
 // ------------------------------------------------------------------
-// On beginPlay
+
+
 function setup() {
 // Init Canvas
 	createCanvas(windowWidth, windowHeight);
 // Setup Canvas  
- 	background ("gray"); 
+ 	background (0); 
+angleMode(DEGREES);
+
+
+eas = new p5.Ease();
+
+
+// Setup Name 
+
+word[0] = 'J';
+word[1] = 'O';
+word[2] = 'E';
+word[3] = 'L';
+word[4] = 'S';
+word[5] = 'C';
+word[6] = 'H';
+word[7] = 'A';
+word[8] = 'E';
+word[9] = 'F';
+word[10] = 'E';
+word[11] = 'R';
+
+// Init "JLetter" Objects
+for (var i = 0; i< word.length; i++){
+	letters[i] = new JLetter(word[i]);
+	letters[i].setPosition(windowWidth/1.9+59*i,75);
+}
+
+
+// Position Kalibration For Better Look 
+letters[3].setOffset(-17,0);
+letters[5].setOffset(-5,0);
+letters[6].setOffset(-15,0);
+letters[7].setOffset(-25,0);
+letters[8].setOffset(-28,0);
+letters[9].setOffset(-40,0);
+letters[10].setOffset(-55,0);
+letters[11].setOffset(-75,0);
+
 
 //UI
 
-uxRect(100, 100, 50, 50).uxEvent('click', trigger);
+//uxRect(100, 100, 50, 50).uxEvent('click', trigger);
 
-button_1 = createButton("YOOOO");
-button_1.mousePressed(switchCreatureCreationPossible);
-button_1.position(100,75);
+//button_1 = createButton("YOOOO");
+//button_1.mousePressed(switchCreatureCreationPossible);
+//button_1.position(100,75);
 
 
-// Init Particles
+//  Particles
 	for(let i = 0; i< num;i++){
-//	Particles.push(createVector(random(windowWidth),random(windowHeight)));
+	Particles.push(createVector(random(windowWidth),random(windowHeight)));
 	}
 
 
-// Init DNAs
+//  DNAs
 	dna1 = new Dna(15);
 
-// Setup DNAs
-  	dna1.generateGenes();
+  dna1.generateGenes();
 
-// Init Objectives 
+//  Objectives 
   	objective_1 = new Objective();
   	objective_2 = new Objective();
   	Objectives.push(objective_1);
   	Objectives.push(objective_2);
 
-// Setup Objectives
   	objective_1.setPosition(createVector(200,200));
   	objective_2.setIsTarget(1);
 
-// Init Creature 
+//  Creature 
   	creature_1 = new Creature();
   	Creatures.push(creature_1);
 
-// Setup Creature  
   	creature_1.setup(windowWidth/2,windowHeight/2);
+
+
+
+  
 } 
 
 // ------------------------------------------------------------------
 // On Tick
 function draw() {
 
-	background(255,20);
-	stroke(0);
-	// for(let i = 0; i<num;i++){
-	// 	let c = Particles[i];
-	// 	stroke(0,0,0);
+	background(0);
+	stroke(255);
+
+ let mouseV = createVector(mouseX,mouseY);
+
+// if (frameCount*10 <= 1000){
+// scale(eas.bounceIn(frameCount*10/1000));
+// } else {
+// 	scale(1); 
+// }
+
+push();
+
+	for(let i = 0; i<num;i++){
+angleMode(RADIANS);
+
+		let c = Particles[i];
+		stroke(555-mouseV.dist(c),555-mouseV.dist(c),555-mouseV.dist(c));
+strokeWeight(1);
 		
-	// 	point(c.x,c.y);
-	// 	let n = noise(c.x*noiseScale,c.y*noiseScale);
-	// 	noiseDetail(2.5);
-	// 	let a = TAU * n;
-	// 	c.x += cos(a);
-	// 	c.y += sin (a);
-	// 	if(!onScreen(c)){
-	// 	c.x = random(windowWidth);
-	// 	c.y = random(windowHeight);
-	// 	}
-	// }
+		point(c.x,c.y);
+		let n = noise(c.x*noiseScale,c.y*noiseScale);
+		
+		let a = TAU * n;
+		c.x += cos(a);
+		c.y += sin (a);
+		if(!onScreen(c)){
+		c.x = random(windowWidth);
+		c.y = random(windowHeight);
+	}
+	 if(mouseV.dist(c) < 120){
+			Particles.forEach(element =>{
+ 
+      let dis = dist(c.x,c.y,element.x,element.y);
+      if(dis>20 && dis<95) {
+        push();
+
+
+        stroke(255-mouseV.dist(c),255-mouseV.dist(c),255-mouseV.dist(c));
+        strokeWeight(0.1);
+        line(c.x,c.y,element.x,element.y);
+      
+        pop();
+      }
+    });
+		}
+	}
+
+pop();
+
+	for (let j = 0; j< word.length; j++){
+angleMode(DEGREES);
+
+push();
+	letters[j].checkDistance2Actor(mouseX,mouseY);
+	letters[j].visualize();
+pop();
+}
+noFill();
 
   	objective_1.visualize();
 
   	for(let i = 0; i<Creatures.length;i++){
   		Creatures[i].update(Objectives);
+  	//	Creatures[i].connectCreatures(Particles);
   		objective_2.setPosition(createVector(mouseX,mouseY));
 	}
 
-  	dna1.visualize();
+  	//dna1.visualize();
    //text(Objectives[1].getPosition().x, width/2, height/2);
 }
 
@@ -152,4 +240,17 @@ function onScreen(v){
 
 function trigger() {
   console.log('uxRect just got clicked!');
+}
+
+function hoverName(){
+	var mouse = createVector(mouseX,mouseY);
+	for(let i = 0; i<letters.length;i++){
+		if(mouse.dist(letters[i].getPosition) < 50){
+			letters[i].setIsHoveredOver(1);
+		} else {
+			letters[i].setIsHoveredOver(0);
+		}
+
+	}
+
 }
