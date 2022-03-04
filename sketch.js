@@ -129,9 +129,7 @@ letters[11].setOffset(-75,0);
 
 
 
-  
-} 
-
+}
 // ------------------------------------------------------------------
 // On Tick
 function draw() {
@@ -148,10 +146,9 @@ function draw() {
 // }
 
 push();
-
-	for(let i = 0; i<num;i++){
 angleMode(RADIANS);
 
+	for(let i = 0; i<num;i++){
 		let c = Particles[i];
 		stroke(555-mouseV.dist(c),555-mouseV.dist(c),555-mouseV.dist(c));
 strokeWeight(1);
