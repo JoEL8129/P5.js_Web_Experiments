@@ -5,6 +5,8 @@ class JLetter {
 		this.scale = 1;
 		this.pos = createVector(0,0);
 		this.isHoveredOver = 0;
+		this.strokeColor = 50;
+		
 		
 
 	}
@@ -15,6 +17,9 @@ class JLetter {
 		this.pos.y = y; 
 	}
 
+	setScale(_s){
+		this.scale = _s;
+	}
 	getPosition(){
 		return this.pos;
 	}
@@ -32,15 +37,19 @@ class JLetter {
 		this.pos.add(offset);
 	}
 
+	
+	setStrokeColor(_color){
+		this.strokeColor = _color; 
+	}
 
 	checkDistance2Actor(mX,mY){
 		var mouse = createVector(mX,mY);
 		var dist = this.pos.dist(mouse);
 		if( dist<25){
 			this.isHoveredOver = 1; 
-			this.scale = 1.05;
+			//this.scale = this.scale*1.05;
 		} else {
-			this.scale = 1;
+			//this.scale = ;
 			this.isHoveredOver = 0; 
       
 
@@ -49,18 +58,18 @@ class JLetter {
 
 visualize(){
 push();
-fill(255,0,255);
+
 
 //translate(this.offset.x,this.offset.y);
 
 noFill();
-stroke(255);
+stroke(this.strokeColor);
 if(this.letter == 'J'){
 push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+
 strokeWeight(5);
 arc(this.pos.x,this.pos.y,50,50,0,90);
 strokeWeight(5);
@@ -78,7 +87,7 @@ pop();
 push();
 scale(this.scale);
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 beginShape();
 vertex(this.pos.x-5,this.pos.y-65);
@@ -96,7 +105,7 @@ push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 arc(this.pos.x,this.pos.y,50,50,0,360);
 strokeWeight(3);
@@ -107,7 +116,7 @@ push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 arc(this.pos.x,this.pos.y,50,50,70,360);
 pop();
@@ -115,7 +124,7 @@ push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 beginShape();
 vertex(this.pos.x-22,this.pos.y);
@@ -132,7 +141,7 @@ push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 beginShape();
 vertex(this.pos.x-5,this.pos.y-60);
@@ -235,7 +244,7 @@ push();
 scale(this.scale);
 
 noFill();
-stroke(255);
+//stroke(this.strokeColor);
 strokeWeight(5);
 beginShape();
 vertex(this.pos.x,this.pos.y-25);

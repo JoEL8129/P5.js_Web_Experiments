@@ -18,6 +18,7 @@ let noiseScale = 0.02;
 // UI
 var button_1;
 var rect;
+let uxarray = [];
 
 // Logic
 let CreatureCreationPossible = 0;
@@ -30,6 +31,9 @@ let letters = [];
 let Particles = [];
 
 let eas;
+
+let dummyCircles = []; 
+
 // ------------------------------------------------------------------
 
 
@@ -62,8 +66,18 @@ word[11] = 'R';
 // Init "JLetter" Objects
 for (var i = 0; i< word.length; i++){
 	letters[i] = new JLetter(word[i]);
-	letters[i].setPosition(windowWidth/1.9+59*i,75);
+	
+	letters[i].setScale(0.6);
+
+	letters[i].setPosition(windowWidth/1.5+59*i,75);
+
+	dummyCircles.push(createVector(windowWidth/2.5+33*i,40));
 }
+
+uxNoFill();
+uxNoStroke();
+
+uxRect(windowWidth/2.5-30, 15, 420, 50).uxEvent('hover', hoverOverName);
 
 
 // Position Kalibration For Better Look 
@@ -76,6 +90,7 @@ letters[9].setOffset(-40,0);
 letters[10].setOffset(-55,0);
 letters[11].setOffset(-75,0);
 
+	
 
 //UI
 
@@ -150,6 +165,7 @@ strokeWeight(1);
 		if(!onScreen(c)){
 		c.x = random(windowWidth);
 		c.y = random(windowHeight);
+		
 	}
 	 if(mouseV.dist(c) < 120){
 			Particles.forEach(element =>{
@@ -171,17 +187,24 @@ strokeWeight(1);
 
 pop();
 
-	for (let j = 0; j< word.length; j++){
-angleMode(DEGREES);
-
 push();
-	letters[j].checkDistance2Actor(mouseX,mouseY);
-	letters[j].visualize();
+//scale(0.6);
+	for (let i = 0; i< word.length; i++){
+angleMode(DEGREES);
+//circle(dummyCircles[i].x,dummyCircles[i].y,30);
+push();
+	
+	letters[i].setStrokeColor(300-constrain(dummyCircles[i].dist(mouseV),0,300)+50);
+	letters[i].checkDistance2Actor(mouseX,mouseY);
+	letters[i].visualize();
 pop();
 }
+
+pop();
+
 noFill();
 
-  	objective_1.visualize();
+  	//objective_1.visualize();
 
   	for(let i = 0; i<Creatures.length;i++){
   		Creatures[i].update(Objectives);
@@ -238,19 +261,9 @@ function onScreen(v){
 }
 
 
-function trigger() {
-  console.log('uxRect just got clicked!');
-}
 
-function hoverName(){
-	var mouse = createVector(mouseX,mouseY);
-	for(let i = 0; i<letters.length;i++){
-		if(mouse.dist(letters[i].getPosition) < 50){
-			letters[i].setIsHoveredOver(1);
-		} else {
-			letters[i].setIsHoveredOver(0);
-		}
-
-	}
+function hoverOverName() {
+	
 
 }
+
